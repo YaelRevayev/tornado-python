@@ -4,8 +4,7 @@ import constant
 import os
 
 def create_dir():
-    parent_dir = "D:/Pycharm projects/"
-    path = os.path.join(parent_dir, constant.DIR_NAME) 
+    path = os.path.join('.', constant.DIR_NAME) 
     os.mkdir(path) 
 
 def make_json(csvFilePath):
@@ -13,7 +12,7 @@ def make_json(csvFilePath):
 
     with open(csvFilePath, encoding='utf-8') as csvf:
         csvReader = csv.DictReader(csvf)
-        count_groups = 0
+        count_groups = 1
         count_rows = 0
         json_file_name=''
 
@@ -28,6 +27,10 @@ def make_json(csvFilePath):
                 records_to_json(data,json_file_name)
                 data = {}
                 count_rows = 0
+
+        if count_rows % 50000 != 0:
+            json_file_name = create_serial_json_file(count_groups)
+            records_to_json(data,json_file_name)
                 
 
 def records_to_json(data, jsonFilePath):
@@ -35,7 +38,7 @@ def records_to_json(data, jsonFilePath):
         jsonf.write(json.dumps(data, indent=4))
 
 def create_serial_json_file(serial):
-    return open("./{}/mada{}".format(constant.DIR_NAME,serial), "x")
+    return open("./{0}/mada{1}".format(constant.DIR_NAME,serial), "x")
 
 create_dir()
 make_json(constant.CSV_SRC_PATH)
