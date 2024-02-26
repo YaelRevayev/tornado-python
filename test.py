@@ -24,9 +24,8 @@ class TestCalculations(unittest.TestCase):
     def test_creation_of_json_file(self):
         csvtojson.write_dict_to_json(data, 0, dir_name)
         file_name = "{0}{1}".format(constant.JSON_FILE_PREFIX, 0)
-        self.assertIn(
-            file_name,
-            os.listdir("./{0}".format(dir_name)),
+        self.assertTrue(
+            os.path.exists("./{0}/{1}".format(dir_name, file_name)),
             msg="File has not been created in current directory",
         )
 
