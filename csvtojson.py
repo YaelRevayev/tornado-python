@@ -16,7 +16,6 @@ def csv_to_json(csvFilePath):
         csvReader = csv.DictReader(csvf)
         count_groups = 0
         count_rows = 0
-        json_file_name = ""
 
         for rows in csvReader:
             key = rows[constant.PRIMARY_KEY]
@@ -25,28 +24,20 @@ def csv_to_json(csvFilePath):
 
             if count_rows % constant.MAX_RECORDS_PER_FILE == 0:
                 count_groups += 1
-                write_group_of_records_to_json(data, count_groups)
+                write_dict_to_json(data, count_groups, constant.DIR_NAME)
                 data = {}
                 count_rows = 0
 
         if count_rows % constant.MAX_RECORDS_PER_FILE != 0:
-            write_group_of_records_to_json(data, count_groups)
+            write_dict_to_json(data, count_groups, constant.DIR_NAME)
 
 
-def dict_to_json(data, jsonFilePath):
-    with open(jsonFilePath, "w", encoding="utf-8") as jsonf:
-        jsonf.write(json.dumps(data, indent=4))
-
-
-def create_serial_json_file(relative_dir, serial):
-    path = "./{0}/{1}{2}".format(relative_dir, constant.JSON_FILE_PREFIX, serial)
+def write_dict_to_json(data, count_groups, dir_path):
+    path = "./{0}/{1}{2}".format(dir_path, constant.JSON_FILE_PREFIX, count_groups)
     open(path, "x")
-    return path
 
-
-def write_group_of_records_to_json(data, count_groups):
-    json_file_name = create_serial_json_file(constant.DIR_NAME, count_groups)
-    dict_to_json(data, json_file_name)
+    with open(path, "w", encoding="utf-8") as jsonf:
+        jsonf.write(json.dumps(data, indent=4))
 
 
 if __name__ == "__main__":
