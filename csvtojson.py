@@ -4,9 +4,9 @@ import constant
 import os
 
 
-def create_dir():
-    path = os.path.join(".", constant.DIR_NAME)
-    os.mkdir(path)
+def create_dir(dir_name):
+    path = os.path.join(".", dir_name)
+    os.makedirs(path, exist_ok=True)
 
 
 def csv_to_json(csvFilePath):
@@ -34,12 +34,14 @@ def csv_to_json(csvFilePath):
 
 def write_dict_to_json(data, count_groups, dir_path):
     path = "./{0}/{1}{2}".format(dir_path, constant.JSON_FILE_PREFIX, count_groups)
-    open(path, "x")
+    file = open(path, "x")
 
     with open(path, "w", encoding="utf-8") as jsonf:
         jsonf.write(json.dumps(data, indent=4))
 
+    file.close()
+
 
 if __name__ == "__main__":
-    create_dir()
+    create_dir(constant.DIR_NAME)
     csv_to_json(constant.CSV_SRC_PATH)
