@@ -3,42 +3,45 @@ import json
 import constant
 import os
 
+
 def create_dir():
-    path = os.path.join('.', constant.DIR_NAME) 
-    os.mkdir(path) 
+    path = os.path.join(".", constant.DIR_NAME)
+    os.mkdir(path)
+
 
 def make_json(csvFilePath):
     data = {}
 
-    with open(csvFilePath, encoding='utf-8') as csvf:
+    with open(csvFilePath, encoding="utf-8") as csvf:
         csvReader = csv.DictReader(csvf)
         count_groups = 1
         count_rows = 0
-        json_file_name=''
+        json_file_name = ""
 
         for rows in csvReader:
             key = rows[constant.PRIMARY_KEY]
             data[key] = rows
-            count_rows+=1
+            count_rows += 1
 
-            if count_rows == 50000:
-                count_record_groups+=1
+            if count_rows == constant.MAX_RECORDS_PER_FILE:
+                count_record_groups += 1
                 json_file_name = create_serial_json_file(count_groups)
-                records_to_json(data,json_file_name)
+                records_to_json(data, json_file_name)
                 data = {}
                 count_rows = 0
 
-        if count_rows % 50000 != 0:
+        if count_rows % constant.MAX_RECORDS_PER_FILE != 0:
             json_file_name = create_serial_json_file(count_groups)
-            records_to_json(data,json_file_name)
-                
+            records_to_json(data, json_file_name)
+
 
 def records_to_json(data, jsonFilePath):
-      with open(jsonFilePath, 'w', encoding='utf-8') as jsonf:
+    with open(jsonFilePath, "w", encoding="utf-8") as jsonf:
         jsonf.write(json.dumps(data, indent=4))
 
+
 def create_serial_json_file(serial):
-    path = "./{0}/mada{1}".format(constant.DIR_NAME,serial) 
+    path = "./{0}/{1}{2}".format(constant.DIR_NAME, constant.JSON_FILE_PREFIX, serial)
     open(path, "x")
     return path
 
