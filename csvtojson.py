@@ -38,7 +38,10 @@ def records_to_json(data, jsonFilePath):
         jsonf.write(json.dumps(data, indent=4))
 
 def create_serial_json_file(serial):
-    return open("./{0}/mada{1}".format(constant.DIR_NAME,serial), "x")
+    path = "./{0}/mada{1}".format(constant.DIR_NAME,serial) 
+    open(path, "x")
+    return path
+
 
 create_dir()
 make_json(constant.CSV_SRC_PATH)
