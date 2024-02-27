@@ -1,9 +1,10 @@
 import unittest
-import extract
-from ...tornado_python import extract
+import sys
+sys.path.append(r"C:\Users\rabay\OneDrive\שולחן העבודה\hafifot-tornado\tornado_python")
+import extract_from_csv
 
 
-class TestFileConverting(unittest.TestCase):
+class TestExtract(unittest.TestCase):
     global data
     data = [
         {"MDACODE": "Yael", "age": "20", "hobby": "read"},
@@ -11,7 +12,7 @@ class TestFileConverting(unittest.TestCase):
     ]
 
     def test_extracting_valid(self):
-        records = extract.extract_records_from_csv_to_list("./src/test_data.csv")
+        records = extract_from_csv.extract_records_from_csv_to_list("./src/test_data.csv")
         self.assertEqual(
             records,
             data,
@@ -20,7 +21,7 @@ class TestFileConverting(unittest.TestCase):
 
     def test_extracting_src_path_invalid(self):
         with self.assertRaises(Exception):
-            extract.extract_records_from_csv_to_list(".nonExistingPath")
+            extract_from_csv.extract_records_from_csv_to_list(".nonExistingPath")
 
 
 if __name__ == "__main__":
