@@ -8,6 +8,7 @@ import warnings
 def create_dir(dir_name):
     if dir_name == "":
         warnings.warn("The dir name is empty")
+        pass
 
     path = os.path.join(".", dir_name)
     os.makedirs(path, exist_ok=True)
@@ -37,6 +38,8 @@ def csv_to_json(csvFilePath):
 
 
 def write_dict_to_json(data, count_groups, dir_path):
+    if not os.path.exists(dir_path):
+        raise Exception("Cant find the directory path given")
     path = "./{0}/{1}{2}".format(dir_path, constant.JSON_FILE_PREFIX, count_groups)
     file = open(path, "x")
 

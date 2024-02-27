@@ -34,8 +34,14 @@ class TestFileConverting(unittest.TestCase):
             msg="File has not been created in current directory",
         )
 
-    def test_creation_of_json_file_invalid_dir_name(self):
-        pass
+    def test_creation_of_json_file_non_existing_dir_path(self):
+        self.assertRaises(
+            Exception,
+            csvtojson.write_dict_to_json,
+            data,
+            0,
+            "./doesntexist",
+        )
 
     def test_creation_of_json_file_empty_dir(self):
         pass
