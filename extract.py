@@ -1,5 +1,4 @@
 import csv
-import constant
 import os
 
 
@@ -15,4 +14,8 @@ def extract_records_from_csv_to_list(csvFilePath):
         for rows in csvReader:
             list.append(rows)
 
+    # print(list)
     return list
+
+
+# extract_records_from_csv_to_list("./src/test_data.csv")
