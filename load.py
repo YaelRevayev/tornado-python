@@ -24,7 +24,7 @@ def write_dict_to_json_file(list_of_dicts, dest_dir_path):
         file.close()
 
 
-def grouping_records_from_list(list_of_records, max_records_per_file):
+def grouping_records_from_list(list_of_records, max_records_per_file=50000):
     data = {}
     count_rows = 0
     list = []
