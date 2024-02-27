@@ -1,5 +1,6 @@
 import unittest
 import extract
+from ...tornado_python import extract
 
 
 class TestFileConverting(unittest.TestCase):
