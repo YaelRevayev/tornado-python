@@ -2,6 +2,7 @@ import unittest
 import csvtojson
 import constant
 import os
+import warnings
 
 
 class TestFileConverting(unittest.TestCase):
@@ -20,6 +21,10 @@ class TestFileConverting(unittest.TestCase):
             os.listdir("."),
             msg="Dir has not been created in current path",
         )
+
+    def test_creating_new_dir_empty_name(self):
+        with self.assertWarns(UserWarning):
+            csvtojson.create_dir("")
 
     def test_creation_of_json_file(self):
         csvtojson.write_dict_to_json(data, 0, dir_name)
