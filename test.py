@@ -4,7 +4,7 @@ import constant
 import os
 
 
-class TestCalculations(unittest.TestCase):
+class TestFileConverting(unittest.TestCase):
     global data
     data = {
         "33718276": {"name": "Yael", "age": 20},
