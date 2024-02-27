@@ -65,19 +65,21 @@ class TestFileConverting(unittest.TestCase):
     def test_csv_to_json_less_than_one_group(self):
         csvtojson.create_dir(constant.DIR_NAME)
         csvtojson.csv_to_json(constant.CSV_SRC_PATH, 50000)
+
         self.assertEqual(len(os.listdir(dir_name)), 1)
         shutil.rmtree(constant.DIR_NAME)
 
     def test_csv_to_json_only_one_group(self):
         csvtojson.create_dir(constant.DIR_NAME)
         csvtojson.csv_to_json(constant.CSV_SRC_PATH, 50000)
+
         self.assertEqual(len(os.listdir(dir_name)), 1)
         shutil.rmtree(constant.DIR_NAME)
 
     def test_csv_to_json_more_than_one_group(self):
-        # Change max records per file in constants
         csvtojson.create_dir(constant.DIR_NAME)
         csvtojson.csv_to_json(constant.CSV_SRC_PATH, 4)
+
         self.assertGreater(len(os.listdir(dir_name)), 10)
         shutil.rmtree(constant.DIR_NAME)
 
