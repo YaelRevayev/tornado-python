@@ -3,6 +3,7 @@ import csvtojson
 import constant
 import os
 import warnings
+import shutil
 
 
 class TestFileConverting(unittest.TestCase):
@@ -12,7 +13,7 @@ class TestFileConverting(unittest.TestCase):
         "11143445": {"name": "Noa", "age": 21},
     }
     global dir_name
-    dir_name = "Yael"
+    dir_name = "mada_reports"
 
     def test_creating_new_dir_valid_name(self):
         csvtojson.create_dir(dir_name)
@@ -43,20 +44,42 @@ class TestFileConverting(unittest.TestCase):
             "./doesntexist",
         )
 
-    def test_creation_of_json_file_empty_dir(self):
-        pass
+    def test_creation_of_json_file_empty_dict(self):
+        self.assertRaises(
+            Exception,
+            csvtojson.write_dict_to_json,
+            {},
+            0,
+            "./Yael",
+        )
 
     def test_creation_of_josn_file_negative_group_num(self):
-        pass
+        self.assertRaises(
+            Exception,
+            csvtojson.write_dict_to_json,
+            data,
+            -6,
+            "./Yael",
+        )
 
     def test_csv_to_json_less_than_one_group(self):
-        pass
+        csvtojson.create_dir(constant.DIR_NAME)
+        csvtojson.csv_to_json(constant.CSV_SRC_PATH, 50000)
+        self.assertEqual(len(os.listdir(dir_name)), 1)
+        shutil.rmtree(constant.DIR_NAME)
 
     def test_csv_to_json_only_one_group(self):
-        pass
+        csvtojson.create_dir(constant.DIR_NAME)
+        csvtojson.csv_to_json(constant.CSV_SRC_PATH, 50000)
+        self.assertEqual(len(os.listdir(dir_name)), 1)
+        shutil.rmtree(constant.DIR_NAME)
 
     def test_csv_to_json_more_than_one_group(self):
-        pass
+        # Change max records per file in constants
+        csvtojson.create_dir(constant.DIR_NAME)
+        csvtojson.csv_to_json(constant.CSV_SRC_PATH, 4)
+        self.assertGreater(len(os.listdir(dir_name)), 10)
+        shutil.rmtree(constant.DIR_NAME)
 
 
 if __name__ == "__main__":
