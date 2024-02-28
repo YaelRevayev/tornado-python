@@ -1,6 +1,7 @@
 import unittest
 import sys
-sys.path.append(r"C:\Users\rabay\OneDrive\שולחן העבודה\hafifot-tornado\tornado_python")
+import os
+sys.path.append(os.getcwd())
 import extract_from_csv
 
 
