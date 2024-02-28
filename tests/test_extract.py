@@ -13,7 +13,7 @@ class TestExtract(unittest.TestCase):
     ]
 
     def test_extracting_valid(self):
-        records = extract_from_csv.extract_records_from_csv_to_list("./src/test_data.csv")
+        records = extract_from_csv.extract_records_from_csv_to_list("./tests/test_data.csv")
         self.assertEqual(
             records,
             data,

@@ -1,4 +1,7 @@
 import unittest
+import sys
+import os
+sys.path.append(os.getcwd())
 import os_operations
 
 

@@ -1,11 +1,12 @@
 import unittest
 import os
-import os_operations
 import shutil
+import sys
+sys.path.append(os.getcwd())
 import load
+import os_operations
 
-
-class TestOsOperations(unittest.TestCase):
+class TestLoad(unittest.TestCase):
     global data
     data = [
         {"MDACODE": "Yael", "age": "20", "hobby": "read"},
