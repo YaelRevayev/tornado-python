@@ -22,29 +22,29 @@ class TestLoad(unittest.TestCase):
                 {"MDACODE": "Eitan", "age": 20, "hobby": "football"},
         ]
 
-    def test_write_to_json_one_file(self):
+    def test_load_json_gets_two_records_writes_to_one_file(self):
         os_operations.create_dir("test-people")
 
-        load.write_json(two_records_data, "./{}".format("test-people"))
+        load.load(two_records_data, "./{}".format("test-people"))
         self.assertEqual(len(os.listdir("test-people")), 1)
 
         shutil.rmtree("test-people")
 
-    def test_write_to_json_more_than_one_file(self):
+    def test_load_json_gets_four_records_writes_to_two_files(self):
         os_operations.create_dir("test-people")
         
-        load.write_json(four_records_Data, "./{}".format("test-people"))
+        load.load(four_records_Data, "./{}".format("test-people"))
         self.assertEqual(len(os.listdir("test-people")), 2)
 
         shutil.rmtree("test-people")
 
-    def test_grouping_records_to_list_valid(self):
+    def test_grouping_records_to_list_gets_two_records_returns_list_of_dicts(self):
         list = load.grouping_records_from_list(two_records_data)
         expected_list = [{'Yael': {'MDACODE': 'Yael', 'age': '20', 'hobby': 'read'},
                            'Noa': {'MDACODE': 'Noa', 'age': '21', 'hobby': 'yoga'}}]  
         self.assertEqual(list, expected_list)
 
-    def test_grouping_records_to_list_empty_list(self):
+    def test_grouping_records_to_list_gets_no_records_returns_empty_list(self):
         list = load.grouping_records_from_list([])
         self.assertEqual(list, [])
 

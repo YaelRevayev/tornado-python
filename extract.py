@@ -1,6 +1,6 @@
 import csv
 
-def extract_csv(csvFilePath):
+def extract(csvFilePath):
     try:
         list = []
 
