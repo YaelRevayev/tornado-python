@@ -1,8 +1,8 @@
 import unittest
 import sys
 import os
-sys.path.append(os.getcwd())
-import extract_from_csv
+sys.path.append(r"C:\Users\rabay\OneDrive\שולחן העבודה\hafifot-tornado\tornado_python")
+import extract
 
 
 class TestExtract(unittest.TestCase):
@@ -13,7 +13,7 @@ class TestExtract(unittest.TestCase):
     ]
 
     def test_extracting_valid(self):
-        records = extract_from_csv.extract_records_from_csv_to_list("./tests/test_data.csv")
+        records = extract.extract_csv("./tests/test_data.csv")
         self.assertEqual(
             records,
             data,
@@ -22,7 +22,7 @@ class TestExtract(unittest.TestCase):
 
     def test_extracting_src_path_invalid(self):
         with self.assertRaises(Exception):
-            extract_from_csv.extract_records_from_csv_to_list(".nonExistingPath")
+            extract.extract_csv(".nonExistingPath")
 
 
 if __name__ == "__main__":

@@ -1,12 +1,12 @@
 import os
-import warnings
 
 
 def create_dir(dir_name):
-    if dir_name == "":
-        warnings.warn("The dir name is empty")
-        pass
+    try:
+        path = os.path.join(".", dir_name)
+        os.makedirs(path, exist_ok=True)
+        return path
+    except NameError:
+        print(NameError)
 
-    path = os.path.join(".", dir_name)
-    os.makedirs(path, exist_ok=True)
-    return path
+
