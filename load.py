@@ -3,7 +3,7 @@ import os
 import json
 
 
-def load(list_of_records, dest_dir_path):
+def load(list_of_records, dest_dir_path,max_records_per_file = constant.MAX_RECORDS_PER_FILE):
     list_of_dicts = grouping_records_from_list(list_of_records)
     serial_identifier = len(os.listdir(dest_dir_path)) + 1
 

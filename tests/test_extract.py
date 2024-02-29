@@ -1,7 +1,8 @@
 import unittest
 import sys
 import os
-sys.path.append(r"C:\Users\rabay\OneDrive\שולחן העבודה\hafifot-tornado\tornado_python")
+os.chdir("../")
+sys.path.append(sys.path.append(os.getcwd()))
 import extract
 
 
@@ -13,7 +14,8 @@ class TestExtract(unittest.TestCase):
     ]
 
     def test_extract_csv_gets_valid_path_returns_records_to_list(self):
-        records = extract.extract_csv("./tests/test_data.csv")
+        print(os.getcwd())
+        records = extract.extract("./tests/test_data.csv")
         self.assertEqual(
             records,
             data,

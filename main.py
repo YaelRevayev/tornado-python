@@ -8,7 +8,7 @@ def main():
 
     os_operations.create_dir(constant.DIR_NAME)
     
-    load(records, "./{}".format(constant.DIR_NAME))
+    load(records, "./{}".format(constant.DIR_NAME),constant.MAX_RECORDS_PER_FILE)
 
 
 if __name__ == "__main__":
