@@ -19,6 +19,7 @@ jobs:
               script: |  
                   if [ -d ${{ github.event.repository.name }} ]; then
                       echo "exists"
+                      cd ${{ github.event.repository.name }}
                       git pull
                   else
                       echo "doesnt exist"
