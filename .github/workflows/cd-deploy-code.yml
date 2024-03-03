@@ -16,7 +16,7 @@ jobs:
         - name: copy to vm from current runner
           run: |
             sudo apt-get install sshpass
-            sudo  sshpass -p ${{ secrets.AZURE_VM_PASSWORD }} scp -o StrictHostKeyChecking=no -v -r tornado_python.zip ${{ secrets.AZURE_VM_USERNAME }}@${{ secrets.AZURE_VM_PASSWORD }}:/home/yael-vm
+            sudo  sshpass -p ${{ secrets.AZURE_VM_PASSWORD }} scp -o StrictHostKeyChecking=no -v -r tornado_python.zip ${{ secrets.AZURE_VM_USERNAME }}@${{ secrets.AZURE_VM_HOST }}:/home/yael-vm
 
   unzip-code-on-vm:
       runs-on: ubuntu-latest
