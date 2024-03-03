@@ -2,9 +2,9 @@ name: cd-deploy-and-run-code-on-vm
 on:
   workflow_run:
     workflows: ["ci-test-actions"]
-  push:
-    branches:
-      - main
+    branches: [main]
+    types: 
+      - completed
 jobs:
   send-code-zipped:
     runs-on: ubuntu-latest
