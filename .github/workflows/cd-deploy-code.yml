@@ -19,5 +19,5 @@ jobs:
             ssh-keygen -R 20.127.209.88
             sudo apt-get install sshpass
             sudo sshpass -p Yael1234567890
-            sudo ssh -o 'StrictHostKeyChecking no' yael-vm@20.127.209.88
+            sudo ssh -T yael-vm@20.127.209.88
             sudo scp -r tornado_python.zip yael-vm@20.127.209.88:/home/yael/apps/
