@@ -25,8 +25,7 @@ jobs:
         - name: uzip folder on vm
           run: |
             sudo apt-get install sshpass
-            sshpass -p Yael1234567890
-            ssh yael-vm@20.127.209.88 
+            sudo sshpass -p Yael1234567890 ssh yael-vm@20.127.209.88 
             sudo apt install unzip
             rm -f tornado_python
             mkdir tornado_python
