@@ -18,3 +18,25 @@ jobs:
           run: |
             sudo apt-get install sshpass
             sudo  sshpass -p Yael1234567890 scp -o StrictHostKeyChecking=no -v -r tornado_python.zip yael-vm@20.127.209.88:/home/yael-vm
+
+  unzip-code-on-vm:
+      runs-on: ubuntu-latest
+      steps:
+        - name: uzip folder on vm
+        - run: 
+            sudo apt-get install sshpass
+            sshpass -p Yael1234567890
+            ssh yael-vm@20.127.209.88 
+            sudo apt install unzip
+            rm -f tornado_python
+            mkdir tornado_python
+            unzip tornado_python.zip -d ./tornado_python
+        - name: create and run app as a service
+        - run:
+            cp /home/yael-vm/tornado_python/python-app.service /etc/systemd/system/
+            cd /etc/systemd/system/
+            sudo systemctl enable python-app.service
+            sudo systemctl daemon-reload
+            sudo service python-app start
+
+
