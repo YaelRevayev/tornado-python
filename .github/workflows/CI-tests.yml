@@ -12,7 +12,12 @@ jobs:
             python-version: '3.x'
         - name: Install dependencies
           run: |
-            pip install -r requirements.txt
+            pip install unittest
+            pip install json
+            pip install csv
+            pip install os
+            pip install sys
+            pip install shutil
         - name: Test with unittest
           run: |
             cd tests
