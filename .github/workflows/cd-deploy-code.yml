@@ -25,7 +25,7 @@ jobs:
                       git clone https://github.com/${{ github.repository }}.git 
                   fi
                   sudo rm -r /etc/systemd/system/python-app.service
-                  sudo cp /home/yael-vm/tornado_python/python-app.service /etc/systemd/system/ 
+                  sudo cp /home/yael-vm/${{ github.event.repository.name }}/python-app.service /etc/systemd/system/ 
                   cd /etc/systemd/system/
                   sudo systemctl enable python-app.service
                   sudo systemctl daemon-reload
