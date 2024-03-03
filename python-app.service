@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 Type=simple
-WorkingDirectory=/home/yael-vm/tornado_python
-ExecStart=/usr/bin/python3 /home/yael-vm/tornado_python/main.py
+WorkingDirectory=/home/yael-vm/tornado-python
+ExecStart=/usr/bin/python3 /home/yael-vm/tornado-python/main.py
 Restart=always
 
 [Install]
