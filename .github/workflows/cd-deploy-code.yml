@@ -16,7 +16,7 @@ jobs:
 
         - name: copy to vm from current runner
         - run: 
-            scp -r tornado_python.zip yael-vm@20.127.209.88:/home/yael/
+            scp -r tornado_python.zip yael-vm@20.127.209.88:/home/yael/apps/
 
   unzip-code-on-vm:
       runs-on: ubuntu-latest
@@ -27,7 +27,9 @@ jobs:
             sshpass -p Yael1234567890
             ssh yael-vm@20.127.209.88 
             sudo apt install unzip
-            cd home/yael/
+            mkdir apps
+            cd apps/
+            mkdir tornado_python
             unzip tornado_python.zip -d ./tornado_python
         - name: create and run app as a service
         - run:
