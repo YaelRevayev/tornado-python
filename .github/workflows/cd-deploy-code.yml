@@ -6,23 +6,24 @@ on:
     types: 
       - completed
 jobs:
-  send-code-zipped:
+  git-clone-or-pull:
     runs-on: ubuntu-latest
+    outputs:
+      message: ${{ steps.echo.outputs.message }}
     steps:
         - uses: actions/checkout@v4
-        - name: zip folder with content
+        - name: Check if directory exists
+          id: check_dir
           run: |
-            sudo apt install zip unzip
-            zip -r tornado_python.zip .
-
-        - name: copy to vm from current runner
-          run: |
-            sudo apt-get install sshpass
-            sudo  sshpass -p ${{ secrets.AZURE_VM_PASSWORD }} scp -o StrictHostKeyChecking=no -v -r tornado_python.zip ${{ secrets.AZURE_VM_USERNAME }}@${{ secrets.AZURE_VM_HOST }}:/home/yael-vm
+            if [ -d ${{ github.repository }} ]; then
+               echo "::set-output name=dir_exists::true"
+            else
+            echo "::set-output name=dir_exists::false"
+            fi
 
   unzip-code-on-vm:
       runs-on: ubuntu-latest
-      needs: send-code-zipped
+      needs: git-clone-or-pull
       steps:
         - name: executing remote ssh unzip commands using password
           uses: appleboy/ssh-action@v1.0.3
@@ -32,18 +33,20 @@ jobs:
               password: ${{ secrets.AZURE_VM_PASSWORD }}
               port: ${{ secrets.AZURE_VM_PORT }}
               script: |
-                sudo apt install unzip
-                cd /home/yael-vm
-                sudo rm -r tornado_python
-                mkdir tornado_python
-                unzip tornado_python.zip -d ./tornado_python
-
-                sudo rm -r /etc/systemd/system/python-app.service
-                sudo cp /home/yael-vm/tornado_python/python-app.service /etc/systemd/system/ 
-                cd /etc/systemd/system/
-                sudo systemctl enable python-app.service
-                sudo systemctl daemon-reload
-                sudo service python-app start
+                 if [ "${{ steps.check_dir.outputs.dir_exists }}" == "true" ]; then
+                    echo "exists"
+                    git pull
+                 else
+                    echo "doesnt exist"
+                    git clone https://github.com/${{ github.actor }}/${{ github.repository }}.git 
+                  fi
+                  
+                  sudo rm -r /etc/systemd/system/python-app.service
+                  sudo cp /home/yael-vm/tornado_python/python-app.service /etc/systemd/system/ 
+                  cd /etc/systemd/system/
+                  sudo systemctl enable python-app.service
+                  sudo systemctl daemon-reload
+                  sudo service python-app start
 
               
                 
