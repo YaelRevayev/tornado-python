@@ -34,12 +34,12 @@ jobs:
               script: |
                 sudo apt install unzip
                 cd /home/yael-vm
-                rm -f tornado_python
+                sudo rm -r tornado_python
                 mkdir tornado_python
                 unzip tornado_python.zip -d ./tornado_python
 
-                sudo rm -rf /etc/systemd/system/python-app.service
-                sudo cp /home/yael-vm/tornado_python/python-app.service /etc/systemd/system/ -y
+                sudo rm -r /etc/systemd/system/python-app.service
+                sudo cp /home/yael-vm/tornado_python/python-app.service /etc/systemd/system/ 
                 cd /etc/systemd/system/
                 sudo systemctl enable python-app.service
                 sudo systemctl daemon-reload
