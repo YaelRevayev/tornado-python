@@ -26,7 +26,7 @@ jobs:
         - name: executing remote ssh unzip commands using password
           uses: appleboy/ssh-action@v1.0.3
           with:
-              host: ${{ secrets.AZURE_VM_HOST }}
+              host: 20.127.209.88
               username: ${{ secrets.AZURE_VM_USERNAME }}
               password: ${{ secrets.AZURE_VM_PASSWORD }}
               port: ${{ secrets.AZURE_VM_PORT }}
