@@ -3,4 +3,44 @@ on:
   push:
     branches:
       - main
+jobs:
+  send-code-zipped:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v4
+        - name: zip folder with content
+        - run:
+            sudo apt install zip unzip
+            pwd
+            zip -r tornado_python.zip .
+
+        - name: copy to vm from current runner
+        - run: 
+            scp -r tornado_python.zip yael-vm@20.127.209.88:/home/yael/
+
+  unzip-code-on-vm:
+      runs-on: ubuntu-latest
+      steps:
+        - name: uzip folder on vm
+        - run: 
+            yum install sshpass
+            sshpass -p Yael1234567890
+            ssh yael-vm@20.127.209.88 
+            sudo apt install unzip
+            cd home/yael/
+            unzip tornado_python.zip -d ./tornado_python
+        - name: create and run app as a service
+        - run:
+            cd /etc/systemd/system/
+            touch python-app.service
+            sudo systemctl enable python-app.service
+            sudo systemctl daemon-reload
+            sudo service python-app start
+        
+        
+  
+        
+        
+            
+        
 
