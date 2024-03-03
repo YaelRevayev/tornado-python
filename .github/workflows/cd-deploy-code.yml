@@ -6,24 +6,8 @@ on:
     types: 
       - completed
 jobs:
-  git-clone-or-pull:
-    runs-on: ubuntu-latest
-    outputs:
-      message: ${{ steps.echo.outputs.message }}
-    steps:
-        - uses: actions/checkout@v4
-        - name: Check if directory exists
-          id: check_dir
-          run: |
-            if [ -d ${{ github.repository }} ]; then
-               echo "::set-output name=dir_exists::true"
-            else
-            echo "::set-output name=dir_exists::false"
-            fi
-
-  unzip-code-on-vm:
+  run-code-on-vm:
       runs-on: ubuntu-latest
-      needs: git-clone-or-pull
       steps:
         - name: executing remote ssh unzip commands using password
           uses: appleboy/ssh-action@v1.0.3
@@ -32,21 +16,17 @@ jobs:
               username: ${{ secrets.AZURE_VM_USERNAME }}
               password: ${{ secrets.AZURE_VM_PASSWORD }}
               port: ${{ secrets.AZURE_VM_PORT }}
-              script: |
-                 if [ "${{ steps.check_dir.outputs.dir_exists }}" == "true" ]; then
-                    echo "exists"
-                    git pull
-                 else
-                    echo "doesnt exist"
-                    git clone https://github.com/${{ github.actor }}/${{ github.repository }}.git 
+              script: |  
+                  if [ -d ${{ github.event.repository.name }} ]; then
+                      echo "exists"
+                     git pull
+                  else
+                      echo "doesnt exist"
+                      git clone https://github.com/${{ github.repository }}.git 
                   fi
-                  
                   sudo rm -r /etc/systemd/system/python-app.service
                   sudo cp /home/yael-vm/tornado_python/python-app.service /etc/systemd/system/ 
                   cd /etc/systemd/system/
                   sudo systemctl enable python-app.service
                   sudo systemctl daemon-reload
                   sudo service python-app start
-
-              
-                
