@@ -1,13 +1,13 @@
 template: 
 [Unit]
-Description = A script for extracting data and converting it from csv file to multiple json files
-After = network.target
+Description=A script for extracting data and converting it from csv file to multiple json files
+After=network.target
 
 [Service]
-Type = simple
+Type=simple
 WorkingDirectory=/home/yael-vm/tornado_python
-ExecStart = /usr/bin/python3 /home/yael-vm/tornado_python/main.py
-Restart = always
+ExecStart=/usr/bin/python3 /home/yael-vm/tornado_python/main.py
+Restart=always
 
 [Install]
-WantedBy = multi-user.target
+WantedBy=multi-user.target
