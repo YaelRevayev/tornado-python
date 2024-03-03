@@ -28,9 +28,9 @@ jobs:
             sudo apt-get install sshpass
             sudo sshpass -p Yael1234567890 ssh -o StrictHostKeyChecking=no yael-vm@20.127.209.88 
             sudo apt install unzip
+            cd /home/yael-vm
             rm -f tornado_python
             mkdir tornado_python
-            echo pwd
             unzip tornado_python.zip -d ./tornado_python
         - name: create and run app as a service
           run: |
