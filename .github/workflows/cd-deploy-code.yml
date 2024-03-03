@@ -19,7 +19,7 @@ jobs:
               script: |  
                   if [ -d ${{ github.event.repository.name }} ]; then
                       echo "exists"
-                     git pull
+                      git pull
                   else
                       echo "doesnt exist"
                       git clone https://github.com/${{ github.repository }}.git 
