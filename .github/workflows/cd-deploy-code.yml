@@ -1,8 +1,10 @@
 name: cd-deploy-and-run-code-on-vm
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["ci-test-actions"]
+    branches: [main]
+    types: 
+      - completed
 jobs:
   send-code-zipped:
     runs-on: ubuntu-latest
@@ -11,13 +13,12 @@ jobs:
         - name: zip folder with content
           run: |
             sudo apt install zip unzip
-            pwd
             zip -r tornado_python.zip .
 
         - name: copy to vm from current runner
           run: |
             sudo apt-get install sshpass
-            sudo  sshpass -p Yael1234567890 scp -o StrictHostKeyChecking=no -v -r tornado_python.zip yael-vm@20.127.209.88:/home/yael-vm
+            sudo  sshpass -p ${{ secrets.AZURE_VM_PASSWORD }} scp -o StrictHostKeyChecking=no -v -r tornado_python.zip ${{ secrets.AZURE_VM_USERNAME }}@${{ secrets.AZURE_VM_HOST }}:/home/yael-vm
 
   unzip-code-on-vm:
       runs-on: ubuntu-latest
@@ -26,13 +27,23 @@ jobs:
         - name: executing remote ssh unzip commands using password
           uses: appleboy/ssh-action@v1.0.3
           with:
-              host: 20.127.209.88
-              username: yael-vm
-              password: Yael1234567890
-              port: 22
+              host: ${{ secrets.AZURE_VM_HOST }}
+              username: ${{ secrets.AZURE_VM_USERNAME }}
+              password: ${{ secrets.AZURE_VM_PASSWORD }}
+              port: ${{ secrets.AZURE_VM_PORT }}
               script: |
                 sudo apt install unzip
                 cd /home/yael-vm
                 rm -f tornado_python
                 mkdir tornado_python
                 unzip tornado_python.zip -d ./tornado_python
+
+                rm -rf /etc/systemd/system/python-app.service
+                cp /home/yael-vm/tornado_python/python-app.service /etc/systemd/system/
+                cd /etc/systemd/system/
+                sudo systemctl enable python-app.service
+                sudo systemctl daemon-reload
+                sudo service python-app start
+
+              
+                
