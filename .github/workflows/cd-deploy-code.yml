@@ -27,10 +27,10 @@ jobs:
           uses: appleboy/ssh-action@v1.0.3
           with:
               host: 20.127.209.88
-              username: ${{ secrets.AZURE_VM_USERNAME }}
-              password: ${{ secrets.AZURE_VM_PASSWORD }}
-              port: ${{ secrets.AZURE_VM_PORT }}
-              script: 
+              username: yael-vm
+              password: Yael1234567890
+              port: 22
+              script: |
                 sudo apt install unzip
                 cd /home/yael-vm
                 rm -f tornado_python
