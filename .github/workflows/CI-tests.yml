@@ -2,7 +2,7 @@ name: ci-test-actions
 run-name: ${{ github.actor }} is testing code
 on: [push]
 jobs:
-  check-bats-version:
+  check-tests:
     runs-on: ubuntu-latest
     steps:
         - uses: actions/checkout@v4
@@ -12,8 +12,6 @@ jobs:
             python-version: '3.x'
         - name: Install dependencies
           run: |
-            pip install wheel setuptools pip --upgrade
-            pip3 install wheel setuptools pip --upgrade
             pip install -r requirements.txt
         - name: Test with unittest
           run: |
