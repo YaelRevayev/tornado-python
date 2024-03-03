@@ -1,4 +1,3 @@
-template: 
 [Unit]
 Description=A script for extracting data and converting it from csv file to multiple json files
 After=network.target
