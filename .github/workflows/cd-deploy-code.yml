@@ -1,0 +1,6 @@
+name: cd-deploy-and-run-code-on-vm
+on:
+  push:
+    branches:
+      - main
+
