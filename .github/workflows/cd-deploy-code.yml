@@ -38,11 +38,3 @@ jobs:
             sudo systemctl enable python-app.service
             sudo systemctl daemon-reload
             sudo service python-app start
-        
-        
-  
-        
-        
-            
-        
-
