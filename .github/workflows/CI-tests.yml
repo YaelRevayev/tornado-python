@@ -11,8 +11,7 @@ jobs:
           with:
             python-version: '3.x'
         - name: Install dependencies
-          run: |
-            pip install unittest
+          run: 
             pip install json
             pip install csv
             pip install os
