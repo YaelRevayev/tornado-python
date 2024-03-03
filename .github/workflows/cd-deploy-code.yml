@@ -9,11 +9,11 @@ jobs:
     steps:
         - uses: actions/checkout@v4
         - name: zip folder with content
-        - run: |
+          run: |
             sudo apt install zip unzip
             pwd
             zip -r tornado_python.zip .
 
         - name: copy to vm from current runner
-        - run: |
+          run: |
             scp -r tornado_python.zip yael-vm@20.127.209.88:/home/yael/apps/
