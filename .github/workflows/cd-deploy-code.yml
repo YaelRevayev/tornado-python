@@ -17,5 +17,6 @@ jobs:
         - name: copy to vm from current runner
           run: |
             sudo apt-get install sshpass
+            rm /home/USERNAME/.ssh/known_hosts
             sshpass -p Yael1234567890
             scp -r tornado_python.zip yael-vm@20.127.209.88:/home/yael/apps/
